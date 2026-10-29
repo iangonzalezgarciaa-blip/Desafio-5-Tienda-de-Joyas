@@ -23,10 +23,10 @@ jobs:
           --health-retries 10
     env:
       PGHOST: localhost
-            PGPORT: 5432
-            PGUSER: postgres
-            PGPASSWORD: postgres
-            PGDATABASE: joyas
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: joyas
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
