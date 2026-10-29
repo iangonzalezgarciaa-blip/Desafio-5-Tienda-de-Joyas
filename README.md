@@ -46,6 +46,8 @@ En los filtros interpreté `precio_min` como un límite **mínimo** (`>=`) y `pr
 
 ## Pruebas
 
+También ejecuto pruebas HTTP contra PostgreSQL real para comprobar paginación, enlaces HATEOAS, filtros y rechazo de parámetros inválidos.
+
 Mis pruebas de consultas verifican paginación y ordenamiento, validación del campo de orden, filtros parametrizados, resistencia a inyección SQL en filtros y creación de enlaces HATEOAS.
 
 Ejecuto las pruebas con:
