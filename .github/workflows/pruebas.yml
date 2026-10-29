@@ -1,4 +1,4 @@
-name: Comprobación automática
+name: Pruebas unitarias e integración PostgreSQL
 on:
   push:
     branches: [main]
@@ -7,16 +7,34 @@ on:
 jobs:
   pruebas:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: joyas
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+            PGPORT: 5432
+            PGUSER: postgres
+            PGPASSWORD: postgres
+            PGDATABASE: joyas
     steps:
-      - name: Obtener código
-        uses: actions/checkout@v4
-      - name: Preparar Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Instalar dependencias
         run: npm install --no-audit --no-fund
       - name: Comprobar sintaxis
         run: find . -path './node_modules' -prune -o -name '*.js' -print -exec node --check {} \;
-      - name: Ejecutar pruebas
+      - name: Pruebas automatizadas
         run: npm test
